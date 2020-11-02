@@ -8,6 +8,11 @@ H = 500
 P = W*4
 V = 0.3
 
+// coordinates of the middle of the circle
+const h = W/2
+const k = W/2
+const r = W/4
+
 setup = function() {
     createCanvas(W,H);
 		system = new ParticleSystem(createVector(W/2, H/2));
