@@ -4,3 +4,5 @@ In this repository, I will share the source code of some `p5.js` visualizations 
 
 The source code for some of my `d3.js` visualizations is shared on my **[Observable](https://observablehq.com/@git1984)** profile.  
 
+// setting proper email add
+
