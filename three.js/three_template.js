@@ -1,3 +1,5 @@
+import * as THREE from '../libs/three/build/three.module.js';
+
 console.log("hey three");
 
 let scene, renderer, camera, cube, sphere;
