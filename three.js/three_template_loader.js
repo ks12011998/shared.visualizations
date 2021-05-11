@@ -1,23 +1,16 @@
 import * as THREE from '../libs/three/build/three.module.js';
 
 import { GUI } from '../libs/three/examples/jsm/libs/dat.gui.module.js';
+
 import { OrbitControls } from '../libs/three/examples/jsm/controls/OrbitControls.js'
+
 import { GLTFLoader } from '../libs/three/examples/jsm/loaders/GLTFLoader.js'
-
-import { EffectComposer } from '../libs/three/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from '../libs/three/examples/jsm/postprocessing/RenderPass.js';
-import { GlitchPass } from '../libs/three/examples/jsm/postprocessing/GlitchPass.js';
-
-import Stats from '../libs/three/examples/jsm/libs/stats.module.js';
 
 console.log("hey three with modules");
 
 const loader = new GLTFLoader();
 
-let stats;
-
-let scene, renderer, camera, cube, sphere, controls, composer, light;
-let glitchPass;
+let scene, renderer, camera, cube, sphere, controls;
 
 let theta = 0;
 let radius = 10;
@@ -74,7 +67,6 @@ function init() {
 	// camera init position
 	camera.position.set(0,0,100);
 
-	
 	// light
 	const lightAmbient = new THREE.AmbientLight(0xffffff, 0.4);
 	/*
@@ -98,42 +90,21 @@ function init() {
 	controls.maxDistance = 500;
 	controls.maxPolarAngle = Math.PI / 2;
 
-	
-
-	// PostProcessing
-	composer = new EffectComposer( renderer );
-	composer.addPass( new RenderPass( scene, camera ) );
-
-	glitchPass = new GlitchPass();
-	/* options */
-	glitchPass.goWild = false;
-	glitchPass.curF = 0;
-
-	composer.addPass( glitchPass );
-
 	// GUI Controller
 	const effectController = {
-		cubeSize: 3,
-		curF: 0
+		cubeSize: 3
 	};
 
 	const matChanger = function ( ) {
 		cube.scale.x = effectController.cubeSize;
 		cube.scale.y = effectController.cubeSize;
 		cube.scale.z = effectController.cubeSize;
-		glitchPass.curF = effectController.curF;
 	};
 
 	const gui = new GUI();
-	gui.add( effectController, "cubeSize", 0, 100, 0.1 ).onChange( matChanger );
-	gui.add( effectController, "curF", -1, 100, 0.1).onChange( matChanger );
+	gui.add( effectController, "cubeSize", 0, 10, 0.1 ).onChange( matChanger );
 	gui.close();
 	matChanger();
-
-	// STATS
-	stats = new Stats();
-	document.body.appendChild( stats.dom );
-
 }
 
 function animate() {
@@ -141,6 +112,8 @@ function animate() {
 
 	cube.rotation.x += 0.02;
 	cube.rotation.y += 0.02;
+
+	//cube.position.z -= 0.1;
 
 	sphere.rotation.x += 0.001;
 	sphere.rotation.y += 0.001;
@@ -151,24 +124,19 @@ function animate() {
 	//camera.position.y = radius * Math.sin( THREE.MathUtils.degToRad( theta ) );
 	camera.position.z = radius * Math.cos( THREE.MathUtils.degToRad( theta ) );
 	*/
+
 	//camera.position.z -= 0.01;
-
 	camera.lookAt( scene.position );
+
 	controls.update();
+
 	renderer.render(scene, camera);
-
-	composer.render();
-
-	stats.update();
 }
 
 function onWindowResize() {
 	camera.aspect = window.innerWidth / window.innerHeight ;
 	camera.updateProjectionMatrix();
-
 	renderer.setSize(window.innerWidth, window.innerHeight);
-	composer.setSize( window.innerWidth, window.innerHeight );
-
 }
 
 window.addEventListener("resize", onWindowResize, false);
