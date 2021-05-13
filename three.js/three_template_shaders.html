@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Experiments</title>
+
+<link rel="stylesheet" href="../static/css/spec/canvas.css">
+
+</head>
+<body>
+	<!-- shaders -->
+
+	<!-- here you can reuse the code from the book of shaders -->
+	<script id="fragmentShader" type="x-shader/x-fragment">
+		uniform float var1;
+		uniform float var2;
+		
+		void main() {
+		    vec3 color = vec3(0.);
+		    color = vec3(abs(sin(var1)),0.3,abs(sin(var2)));
+    		gl_FragColor = vec4(color,1.0);
+		}
+
+	</script>
+
+	<!-- vertex shader for every pixel in our mesh -->
+	<script id="vertexShader" type="x-shader/x-vertex">
+
+		void main() {
+			vec4 modelViewPosition = modelViewMatrix * vec4(position, 1.0);
+			gl_Position = projectionMatrix * modelViewPosition;
+		}
+
+	</script>
+
+	<!-- end of shaders -->
+	<script type="module" src="../static/js/projects/three_template_shaders.js"></script>
+</body>
+</html> 
